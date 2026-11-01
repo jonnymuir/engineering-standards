@@ -1,0 +1,10 @@
+{
+  "name": "engineering-standards",
+  "version": "0.1.0",
+  "description": "Shared commands for the estate's repos: /release and a standards review.",
+  "author": {
+    "name": "Jonny Muir"
+  },
+  "repository": "https://github.com/jonnymuir/engineering-standards",
+  "license": "MIT"
+}

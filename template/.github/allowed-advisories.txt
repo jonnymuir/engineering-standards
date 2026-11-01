@@ -1,0 +1,1 @@
+# One accepted advisory per line: GHSA-xxxx-xxxx-xxxx # reason, and when to revisit

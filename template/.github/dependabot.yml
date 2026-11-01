@@ -1,0 +1,30 @@
+version: 2
+updates:
+  - package-ecosystem: nuget
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 5
+    groups:
+      dotnet:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 7
+    groups:
+      actions:
+        patterns: ["*"]
+  # Add an npm entry per client directory, for example:
+  # - package-ecosystem: npm
+  #   directory: "/src/MyRepo.Client"
+  #   schedule: { interval: weekly, day: monday }
+  #   cooldown: { default-days: 7 }
+  #   groups: { npm: { patterns: ["*"], update-types: ["minor", "patch"] } }

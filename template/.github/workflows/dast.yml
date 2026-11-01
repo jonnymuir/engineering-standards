@@ -1,0 +1,27 @@
+name: DAST
+
+# OWASP ZAP baseline (passive rules only) against the booted app, from jonnymuir/ci-security.
+# Starts advisory; set fail-action: true and require "baseline / DAST baseline" once
+# .zap/rules.tsv is triaged.
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+  schedule:
+    - cron: '0 4 * * *'   # nightly 04:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  baseline:
+    uses: jonnymuir/ci-security/.github/workflows/dast-baseline.yml@d5663651482851ef824487236a7506da02306bef # v1
+    permissions:
+      contents: read
+    with:
+      dotnet-version: '10.0.401'
+      boot-command: dotnet run --project src/MyRepo.Site --urls http://127.0.0.1:8080
+      target-url: http://127.0.0.1:8080
+      health-path: /
+      fail-action: false

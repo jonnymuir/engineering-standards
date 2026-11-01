@@ -1,0 +1,9 @@
+# OWASP ZAP baseline scan rules for the DAST job (.github/workflows/dast.yml).
+#
+# Tab-separated: <alertId>	<action>	<url-regex>	<note>
+#   action = IGNORE  accepted or not applicable, never fails the scan
+#            WARN    reported, does not fail the scan (the default for anything not listed)
+#            FAIL    reported and fails the scan
+#   url-regex: leave empty to apply to every URL, otherwise a Python regex matched against the URL
+#
+# Every IGNORE carries a note saying why it is accepted.

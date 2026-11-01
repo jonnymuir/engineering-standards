@@ -1,0 +1,16 @@
+{
+  "name": "jonnymuir-standards",
+  "owner": {
+    "name": "Jonny Muir"
+  },
+  "plugins": [
+    {
+      "name": "engineering-standards",
+      "source": "./plugin",
+      "description": "Shared commands for the estate's repos: /release and a standards review."
+    }
+  ],
+  "metadata": {
+    "description": "Shared Claude Code commands for the estate's repos."
+  }
+}
