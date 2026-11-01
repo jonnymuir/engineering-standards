@@ -35,6 +35,7 @@ For a new repo, or an existing one being brought up to standard:
 
    ```sh
    gh api -X PATCH repos/OWNER/REPO/code-scanning/default-setup -f state=not-configured
+   gh api -X PUT repos/OWNER/REPO/vulnerability-alerts    # dependency graph, needed by dependency review
    gh secret set CS_ACCESS_TOKEN --repo OWNER/REPO        # CodeScene
    gh api -X PATCH repos/OWNER/REPO -F delete_branch_on_merge=true
    ```
@@ -59,20 +60,21 @@ For a new repo, or an existing one being brought up to standard:
 
 | Practice | Umbraco.Prism | Wayfinder | Wayfinder.Umbraco | ServiceDesignCompanion |
 |---|---|---|---|---|
-| `ci-security` SAST and supply chain | ✅ | ✅ | ✅ | ❌ |
-| ZAP baseline | ✅ | ✅ (with signed-in leg) | ✅ | ❌ |
-| Ruleset on `main` | ✅ | ✅ | ✅ | ❌ |
-| CodeScene delta | ✅ | ✅ | ✅ | ❌ |
-| `TreatWarningsAsErrors` and analyzers | ❌ | ✅ | ❌ | ❌ |
-| Size and complexity budgets | ❌ | ✅ | ❌ | ❌ |
-| k6 performance tripwire | ❌ | ❌ | ✅ | ❌ |
-| `CLAUDE.md` links to `STANDARDS.md` | ❌ | ❌ | ❌ | ❌ |
-| `/release` from the plugin | ❌ (own copy) | ❌ | ❌ | ❌ |
+| `ci-security` v1.4.0 (SAST, supply chain, secret scan) | ✅ | ✅ | ✅ | ✅ |
+| ZAP baseline | ✅ | ✅ (with signed-in leg) | ✅ | ✅ (advisory until it has content) |
+| Ruleset on `main` | ✅ | ✅ | ✅ | ✅ |
+| CodeScene delta | ✅ | ✅ | ✅ | ✅ |
+| `TreatWarningsAsErrors` and analyzers | ✅ (logging baseline) | ✅ | ✅ | ✅ |
+| Size and complexity budgets | ✅ | ✅ | ✅ | ✅ |
+| k6 performance tripwire | ✅ | ✅ | ✅ | ❌ (until it has content) |
+| `CLAUDE.md` links to `STANDARDS.md` | ✅ | ✅ | ✅ | ✅ |
+| `/release` from the plugin | ✅ | ✅ | ✅ | n/a (no releases yet) |
 
-## Known gaps in the standards themselves
+`ci-security` and this repo gate themselves with `self-check.yml` and protect `main` the same way.
 
-- **Two changelog styles.** Wayfinder adds `[Unreleased]` entries in each PR; Prism writes the
-  entry at release time from commits. These standards follow the release-time style.
-- **Prism carries 91 skills and leftovers of an earlier Copilot setup** (`.squad/`, `.copilot/`,
-  `.agents/`). Pruning them to the procedures that still apply follows the agent guidance in
-  [STANDARDS.md](STANDARDS.md#7-agent-guidance).
+## Known gaps
+
+- **Prism's logging baseline:** 44 files whose log calls predate `[LoggerMessage]`. They convert as
+  the files are touched; the baseline only shrinks.
+- **Firebase installation IDs:** Prism still sends FCM registration tokens, which FirebaseAdmin marks
+  obsolete. Moving to installation IDs changes what the apps send and needs device testing.

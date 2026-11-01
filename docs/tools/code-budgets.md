@@ -53,6 +53,16 @@ adding one is a deliberate, reviewed edit.
 
 Both lists only shrink. When you split a file, remove its entry.
 
+## Baselining analyzer findings in existing code
+
+Turning on the analyzers in an existing repo can surface a large class of findings in old code,
+such as log calls that predate source-generated `[LoggerMessage]` methods (CA1848, CA1873). When
+fixing them all at once would be a large rewrite for little gain, list the affected files in their
+own `.editorconfig` block, for example `# BEGIN logging baseline` ... `# END logging baseline`,
+setting just those rules to `none`. Like the other baselines it only shrinks: new files meet the
+rule, and a file leaves the list when it is touched and converted. Everything else is fixed, or
+suppressed in code with a `Justification`.
+
 ## When a budget fails
 
 Split the code. Extract a class with one concern, or move a group of methods to a new file. Do not
