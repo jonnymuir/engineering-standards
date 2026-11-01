@@ -5,6 +5,7 @@ What each tool catches, when it runs, and whether it can block a merge.
 | Tool | Catches | Runs | Blocks merge? | Guide |
 |---|---|---|---|---|
 | NuGet vulnerability gate | Known High/Critical vulnerabilities in direct and transitive packages | PR, push to main, weekly | Yes (`security / security-all`) | [supply-chain.md](supply-chain.md) |
+| Secret scan (gitleaks) | Credentials and generated keys committed to any file | PR, push to main, weekly | Yes (`security / security-all`) | [secret-scanning.md](secret-scanning.md) |
 | Dependency review | A PR that adds a vulnerable dependency | PR | Yes (`security / security-all`) | [supply-chain.md](supply-chain.md) |
 | Dependabot | Outdated packages and actions | Weekly, 7-day cooldown | No (opens PRs) | [supply-chain.md](supply-chain.md) |
 | CodeQL | Injection, unsafe data flow and other code-level security bugs (C#, JS/TS) | PR, push to main, weekly | Yes (`CodeQL`) | [codeql.md](codeql.md) |
@@ -20,7 +21,7 @@ What each tool catches, when it runs, and whether it can block a merge.
 
 ## Where the checks live
 
-- **Shared reusable workflows** (vulnerability gate, dependency review, CodeQL, Zizmor, ZAP) live in
+- **Shared reusable workflows** (vulnerability gate, dependency review, secret scan, CodeQL, Zizmor, ZAP) live in
   [`jonnymuir/ci-security`](https://github.com/jonnymuir/ci-security). A repo calls them from
   small `security.yml` and `dast.yml` files, pinned to a commit SHA.
 - **Repo-level workflows** (CI, CodeScene, k6, release) are copied from [`template/`](../../template/)

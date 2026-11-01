@@ -18,6 +18,7 @@ It follows its own [STANDARDS.md](STANDARDS.md).
   node template/scripts/check-doc-links.mjs
   claude plugin validate . && claude plugin validate plugin
   bash -n scripts/*.sh
+  gitleaks dir . --redact
   ```
 
-- Every change goes through a PR. Conventional Commits. No em dashes.
+- Every change goes through a PR, gated by `self-check.yml`. Conventional Commits. No em dashes.
