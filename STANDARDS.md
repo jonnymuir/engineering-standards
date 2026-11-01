@@ -19,8 +19,8 @@ Security correctness is a release gate, not a follow-up.
    a seam the host supplies. Never a hardcoded actor, tenant or allow-all default.
 4. **No secrets in source, committed config, logs or test fixtures.** Secrets live in a vault,
    user-secrets or a server-side environment file. Watch for tools that write secrets into
-   tracked files on first run (Umbraco writes `Imaging:HMACSecretKey` into `appsettings.json`),
-   and guard against it with a test.
+   tracked files on first run (Umbraco writes `Imaging:HMACSecretKey` into `appsettings.json`).
+   The secret scan in `security-all` blocks them; a real leak is rotated, not just removed.
 5. **Evaluate every change through the CIA lens.** Confidentiality (cross-user or cross-tenant
    leakage), integrity (can input forge state or skip a step), availability (can input force
    unbounded work). Anything that moves the threat surface is called out in the commit body and

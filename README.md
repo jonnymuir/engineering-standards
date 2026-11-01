@@ -6,12 +6,12 @@ them to it.
 | | |
 |---|---|
 | [STANDARDS.md](STANDARDS.md) | The handbook: security, simplicity, testing, change flow, docs, writing style, agent guidance |
-| [docs/tools/](docs/tools/README.md) | One guide per tool: CodeQL, Zizmor, supply-chain gates, ZAP, CodeScene, code budgets, k6, Playwright and Storybook, doc links, Trusted Publishing, branch protection |
+| [docs/tools/](docs/tools/README.md) | One guide per tool: CodeQL, Zizmor, supply-chain gates, secret scanning, ZAP, CodeScene, code budgets, k6, Playwright and Storybook, doc links, Trusted Publishing, branch protection |
 | [template/](template/) | The files a repo starts with: build settings, workflows, policy scripts, Dependabot, ZAP rules, `SECURITY.md`, a `CLAUDE.md` skeleton |
 | [scripts/](scripts/) | `adopt.sh` copies the template into a repo; `apply-ruleset.sh` protects `main` |
 | [plugin/](plugin/) | A Claude Code plugin with `/release` and the `standards-review` skill |
 
-Shared CI workflows (vulnerability gate, dependency review, CodeQL, Zizmor, ZAP) live in
+Shared CI workflows (vulnerability gate, dependency review, secret scan, CodeQL, Zizmor, ZAP) live in
 [`jonnymuir/ci-security`](https://github.com/jonnymuir/ci-security), which repos pin by commit.
 This repo holds the rules and the starting files; `ci-security` holds the reusable checks.
 
@@ -71,8 +71,6 @@ For a new repo, or an existing one being brought up to standard:
 
 ## Known gaps in the standards themselves
 
-- **No secret scanner across all files.** Only Prism has a guard test, and it covers one key. A
-  gitleaks job in `ci-security` would cover every repo.
 - **Two changelog styles.** Wayfinder adds `[Unreleased]` entries in each PR; Prism writes the
   entry at release time from commits. These standards follow the release-time style.
 - **Prism carries 91 skills and leftovers of an earlier Copilot setup** (`.squad/`, `.copilot/`,

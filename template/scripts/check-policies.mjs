@@ -6,7 +6,8 @@
 //
 // Budgets: C# file 400 lines, C# method 60 lines; TypeScript/JavaScript file 500 lines. Anything already over is
 // recorded in .policy/size-baseline.json at its current size and may only shrink.
-import { readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
 
 const root = new URL('..', import.meta.url).pathname.replace(/\/$/, '');
@@ -16,13 +17,14 @@ const METHOD_BUDGET = 60;
 const SKIP_DIRS = new Set(['node_modules', 'bin', 'obj', 'generated', 'storybook-static', 'test-results', '.git', 'dist', 'fixtures', 'tests', 'lib', 'wwwroot']);
 const SKIP_FILE = /\.(test|stories|spec)\.(ts|tsx)$|\.d\.ts$/;
 
+// Tracked files only, so build output and runtime state (generated models, caches) are never measured.
 function* walk(dir) {
-  for (const name of readdirSync(dir)) {
-    if (SKIP_DIRS.has(name)) continue;
-    const path = join(dir, name);
-    const info = statSync(path);
-    if (info.isDirectory()) yield* walk(path);
-    else if (FILE_BUDGET[name.slice(name.lastIndexOf('.'))] && !SKIP_FILE.test(name)) yield path;
+  const files = execFileSync('git', ['ls-files', '-z'], { cwd: dir, encoding: 'utf8', maxBuffer: 1 << 28 }).split('\0').filter(Boolean);
+  for (const file of files) {
+    const parts = file.split('/');
+    const name = parts.at(-1);
+    if (parts.some((part) => SKIP_DIRS.has(part)) || SKIP_FILE.test(name) || !FILE_BUDGET[name.slice(name.lastIndexOf('.'))]) continue;
+    yield join(dir, file);
   }
 }
 
