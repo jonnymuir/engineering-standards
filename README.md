@@ -1,11 +1,14 @@
 # Engineering standards
 
 How the repos in this estate are built to be safe, secure and simple, and the tooling that holds
-them to it.
+them to it. It doubles as a playbook for a small, surgical, AI-native team: how to set up any
+repository so that a few people and many agents can build in it together without the quality
+drifting.
 
 | | |
 |---|---|
 | [STANDARDS.md](STANDARDS.md) | The handbook: security, simplicity, testing, change flow, docs, writing style, agent guidance |
+| [playbook/](playbook/README.md) | The AI-native repo playbook: why each rule exists and how to work by it. Quality, product, the agent harness, guardrails, testing, diagnosis, change flow, working with agents, contributing upstream, checklists |
 | [docs/tools/](docs/tools/README.md) | One guide per tool: CodeQL, Zizmor, supply-chain gates, secret scanning, ZAP, CodeScene, code budgets, k6, Playwright and Storybook, doc links, Trusted Publishing, branch protection |
 | [template/](template/) | The files a repo starts with: build settings, workflows, policy scripts, Dependabot, ZAP rules, `SECURITY.md`, a `CLAUDE.md` skeleton |
 | [scripts/](scripts/) | `adopt.sh` copies the template into a repo; `apply-ruleset.sh` protects `main` |
@@ -64,7 +67,7 @@ For a new repo, or an existing one being brought up to standard:
 | ZAP baseline | ✅ | ✅ (with signed-in leg) | ✅ | ✅ (advisory until it has content) |
 | Ruleset on `main` | ✅ | ✅ | ✅ | ✅ |
 | CodeScene delta | ✅ | ✅ | ✅ | ✅ |
-| `TreatWarningsAsErrors` and analyzers | ✅ (logging baseline) | ✅ | ✅ | ✅ |
+| `TreatWarningsAsErrors` and analysers | ✅ (logging baseline) | ✅ | ✅ | ✅ |
 | Size and complexity budgets | ✅ | ✅ | ✅ | ✅ |
 | k6 performance tripwire | ✅ | ✅ | ✅ | ❌ (until it has content) |
 | `CLAUDE.md` links to `STANDARDS.md` | ✅ | ✅ | ✅ | ✅ |

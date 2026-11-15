@@ -9,14 +9,14 @@ only shrink.
 | C# method | 60 lines | `scripts/check-policies.mjs` |
 | TypeScript/JavaScript file | 500 lines | `scripts/check-policies.mjs` |
 | `as unknown as` casts | none | `scripts/check-policies.mjs` |
-| C# cyclomatic complexity | 15 | Analyzer CA1502 |
-| C# class coupling | 40 per method, 60 per type | Analyzer CA1506 |
+| C# cyclomatic complexity | 15 | Analyser CA1502 |
+| C# class coupling | 40 per method, 60 per type | Analyser CA1506 |
 | TypeScript function | 80 lines | Biome `noExcessiveLinesPerFunction` |
 | TypeScript cognitive complexity | 15 | Biome `noExcessiveCognitiveComplexity` |
 
 ## Build settings
 
-`Directory.Build.props` turns analyzer warnings into build failures:
+`Directory.Build.props` turns analyser warnings into build failures:
 
 ```xml
 <AnalysisLevel>latest-recommended</AnalysisLevel>
@@ -24,7 +24,7 @@ only shrink.
 <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 ```
 
-`CodeMetricsConfig.txt` sets the CA1502 and CA1506 thresholds and is passed to the analyzers as an
+`CodeMetricsConfig.txt` sets the CA1502 and CA1506 thresholds and is passed to the analysers as an
 `AdditionalFiles` item. `.editorconfig` raises both rules to `warning`, which
 `TreatWarningsAsErrors` makes fatal.
 
@@ -43,7 +43,7 @@ listed file fails, adding a new file over budget fails, and so does a stale entr
 shrank without the baseline being lowered). `--update` only ever lowers or removes entries;
 adding one is a deliberate, reviewed edit.
 
-## Baselines for analyzer and Biome findings
+## Baselines for analyser and Biome findings
 
 - **C#:** existing CA1502/CA1506 offenders go in a block at the end of `.editorconfig`, between
   `# BEGIN complexity baseline` and `# END complexity baseline`, one section per file setting both
@@ -53,9 +53,9 @@ adding one is a deliberate, reviewed edit.
 
 Both lists only shrink. When you split a file, remove its entry.
 
-## Baselining analyzer findings in existing code
+## Baselining analyser findings in existing code
 
-Turning on the analyzers in an existing repo can surface a large class of findings in old code,
+Turning on the analysers in an existing repo can surface a large class of findings in old code,
 such as log calls that predate source-generated `[LoggerMessage]` methods (CA1848, CA1873). When
 fixing them all at once would be a large rewrite for little gain, list the affected files in their
 own `.editorconfig` block, for example `# BEGIN logging baseline` ... `# END logging baseline`,
