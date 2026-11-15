@@ -25,7 +25,7 @@ when it meets them:
 | Memory | Corrections and preferences that persist across sessions | Index every session, detail on demand |
 | Runtime knowledge | An MCP server's instructions, resources and prompts | When connected |
 | The code | Names, types, comments, tests | When read |
-| Feedback | Compiler errors, analyzer findings, test failures, CI messages | When it acts |
+| Feedback | Compiler errors, analyser findings, test failures, CI messages | When it acts |
 
 The last two matter as much as the first. An agent learns the codebase's conventions by reading
 it, so code that is consistent teaches consistency. And a check that fails with a clear message is
@@ -36,13 +36,13 @@ guidance delivered at exactly the right moment.
 `CLAUDE.md` (or `AGENTS.md`) is read at the start of every session, so every line in it costs
 attention on every task. Keep it to what is specific to this repo:
 
-- **What this is**, in a paragraph, including what it deliberately does not do.
-- **Projects**, as a table: path and purpose.
-- **Build and test commands** that run as written, including the order when it matters ("the
+- What this is, in a paragraph, including what it deliberately does not do.
+- Projects, as a table: path and purpose.
+- Build and test commands that run as written, including the order when it matters ("the
   editor bundle must exist on disk before `dotnet pack`").
-- **Releasing:** version files, pre-release checks, what the tag publishes. The `/release`
+- Releasing: version files, pre-release checks, what the tag publishes. The `/release`
   command reads this section.
-- **Rules specific to this repo**, each with its reason.
+- Rules specific to this repo, each with its reason.
 
 Everything general (security, simplicity, testing, writing) is a link to
 [`STANDARDS.md`](../STANDARDS.md), not a copy. Copies drift; links don't. The
@@ -56,7 +56,7 @@ What does not belong there: history ("we used to..."), a changelog, long tutoria
 A rule an agent can follow:
 
 ```markdown
-- **Every endpoint carries an explicit policy** (`RequireAuthorization`). Anonymous access needs
+- Every endpoint carries an explicit policy (`RequireAuthorization`). Anonymous access needs
   a comment naming why. New middleware runs in a test host with the real pipeline.
 ```
 
@@ -75,11 +75,11 @@ instead of a sentence.
 A skill is loaded into context when its description matches the task, so a stale or one-off skill
 costs every session and can steer an agent wrong. The rule:
 
-- **Keep** a skill that encodes a repeatable procedure the repo actually performs (cutting a
+- Keep a skill that encodes a repeatable procedure the repo actually performs (cutting a
   release, reviewing against the standards).
-- **Delete** a skill that records how one bug was fixed. That knowledge belongs in the commit, a
+- Delete a skill that records how one bug was fixed. That knowledge belongs in the commit, a
   test, or a line in `CLAUDE.md` if it is a standing rule.
-- **Share** procedures used in several repos through one plugin
+- Share procedures used in several repos through one plugin
   ([`plugin/`](../plugin/)), installed everywhere, rather than a copy per repo that will drift.
 
 Review skills when you review the repo guide. A repo that accumulated dozens of narrowly named
@@ -127,14 +127,14 @@ noticing when a guidance change made things worse.
 
 Agents that keep memory across sessions need the same discipline as docs:
 
-- **One fact per entry, with the reason and how to apply it.** "Merge green PRs for this repo
+- One fact per entry, with the reason and how to apply it. "Merge green PRs for this repo
   once checks pass; not deploys, force pushes or tags" is usable. "User likes merging" is not.
-- **Corrections are the most valuable entries.** When a person says "I've told you this before",
+- Corrections are the most valuable entries. When a person says "I've told you this before",
   that belongs in memory, and if it applies to every repo, in the standards.
-- **Prune.** A memory that turned out wrong, or describes code that has moved, is worse than none.
-- **Don't store what the repo already records.** Code structure, history and past fixes are in the
+- Prune. A memory that turned out wrong, or describes code that has moved, is worse than none.
+- Don't store what the repo already records. Code structure, history and past fixes are in the
   code and git. Memory holds what isn't derivable: preferences, decisions, the non-obvious.
-- **Promote.** A memory that holds across repos becomes a rule here, with its evidence.
+- Promote. A memory that holds across repos becomes a rule here, with its evidence.
 
 ## Runtime knowledge through MCP
 
@@ -142,11 +142,11 @@ When an agent works against a running system (authoring content, reading data, d
 workflow), the system itself is the best place for guidance: it knows its own rules and its
 current state. An MCP server can carry:
 
-- **Instructions** sent on connect: how to work with this system, in a few paragraphs.
-- **Resources:** the guides, the schema, examples, readable on demand.
-- **Prompts:** named, task-shaped starting points ("design a service", "convert an existing
+- Instructions sent on connect: how to work with this system, in a few paragraphs.
+- Resources: the guides, the schema, examples, readable on demand.
+- Prompts: named, task-shaped starting points ("design a service", "convert an existing
   design").
-- **Tools** whose descriptions and errors teach: validate before save, simulate before publish,
+- Tools whose descriptions and errors teach: validate before save, simulate before publish,
   and say what is wrong in words the agent can act on.
 
 A host that embeds the server can add its own context to the defaults (appended under "About this

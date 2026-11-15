@@ -19,9 +19,9 @@ Security correctness is a release gate, not a follow-up.
    follow the RFCs: no fabricated identifiers, no "works for now" shims. If the spec and an easier
    path conflict, the spec wins or the work stops and the trade-off is raised.
 2. **Deny by default at every new seam.** A new route, endpoint or tool ships with an explicit
-   authorization requirement documented at the call site. Anonymous access carries a written
+   authorisation requirement documented at the call site. Anonymous access carries a written
    reason in the code.
-3. **Libraries take no auth or tenant bypass.** Identity, tenancy and authorization enter through
+3. **Libraries take no auth or tenant bypass.** Identity, tenancy and authorisation enter through
    a seam the host supplies. Never a hardcoded actor, tenant or allow-all default.
 4. **No secrets in source, committed config, logs or test fixtures.** Secrets live in a vault,
    user-secrets or a server-side environment file. Watch for tools that write secrets into

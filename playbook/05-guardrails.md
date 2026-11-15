@@ -33,7 +33,7 @@ flowchart TB
     G1["Permission modes"] --- G2["Untrusted input"] --- G3["Least-privilege identity"] --- G4["Guidance evals"]
   end
   subgraph L1["Before push"]
-    A1["Analyzers as errors"] --- A2["Lint and format"] --- A3["Size script"] --- A4["cs delta"] --- A5["gitleaks, zizmor"]
+    A1["Analysers as errors"] --- A2["Lint and format"] --- A3["Size script"] --- A4["cs delta"] --- A5["gitleaks, zizmor"]
   end
   subgraph L2["Every pull request"]
     B1["Tests at every level"] --- B2["SAST"] --- B3["DAST"] --- B4["Dependencies and secrets"] --- B5["Drift and doc checks"] --- B6["CodeScene"]
@@ -50,14 +50,14 @@ flowchart TB
 
 ## Blocking or advisory
 
-A blocking check must be **deterministic** and about a **must-be** quality. If it can fail on noise,
+A blocking check must be deterministic and about a must-be quality. If it can fail on noise,
 people learn to ignore or bypass it, and then it protects nothing.
 
-- **Blocking:** the build with analyzers, tests, size budgets, SAST, the dependency and secret
+- Blocking: the build with analysers, tests, size budgets, SAST, the dependency and secret
   gates, workflow analysis, doc and drift checks, and DAST once triaged.
-- **Advisory:** CodeScene (its signals need judgement), k6 (shared runners are too noisy for a
+- Advisory: CodeScene (its signals need judgement), k6 (shared runners are too noisy for a
   per-PR threshold), AI review (useful, but not deterministic).
-- **Advisory first, then blocking:** a new check on an existing repo starts advisory, is triaged to
+- Advisory first, then blocking: a new check on an existing repo starts advisory, is triaged to
   zero, then joins the ruleset. That is the ratchet again.
 
 Each CI workflow ends with one aggregate job (`all`) that depends on every other job, so the
@@ -67,7 +67,7 @@ ruleset names a handful of checks however many steps there are.
 
 | Guardrail | Hunts | Blocks |
 |---|---|---|
-| Compiler and analyzers, warnings as errors (`latest-recommended`) | Defects, unsafe patterns, complexity (CA1502) and coupling (CA1506) over budget | Yes |
+| Compiler and analysers, warnings as errors (`latest-recommended`) | Defects, unsafe patterns, complexity (CA1502) and coupling (CA1506) over budget | Yes |
 | Lint and format (Biome for TypeScript) | Style drift, cognitive complexity, long functions | Yes |
 | Size script ([code budgets](../docs/tools/code-budgets.md)) | Files and methods that only grow; a stale baseline | Yes |
 | CodeScene delta | A change that makes a file harder to maintain | Advisory |
@@ -79,7 +79,7 @@ ruleset names a handful of checks however many steps there are.
 
 CodeScene scores each file's Code Health from 1 to 10 using signals that predict how hard code is
 to change: long methods, deep nesting, complex conditionals, many arguments, low cohesion,
-duplication. The **delta** analysis runs on every PR and flags only a touched file that got worse
+duplication. The delta analysis runs on every PR and flags only a touched file that got worse
 (see the [guide](../docs/tools/codescene.md)).
 
 It matters more with agents. An agent writes a lot of code quickly, and the easiest way to make a
@@ -102,18 +102,18 @@ The most valuable checks are often a few dozen lines written for one repo, encod
 made. Writing them is the toolsmith's job in Brooks's surgical team, and it is work agents do well.
 From this estate:
 
-- **Generated-type drift:** the editor's TypeScript model is generated from the C# model, and CI
+- Generated-type drift: the editor's TypeScript model is generated from the C# model, and CI
   regenerates it and fails if the committed copy differs. One source of truth, enforced.
-- **No legacy shapes:** after a data format changed, a check fails if any file still uses the old
+- No legacy shapes: after a data format changed, a check fails if any file still uses the old
   shape, so a shim can't creep back in.
-- **No unmarked HTML sinks:** any `innerHTML`, `insertAdjacentHTML` or `unsafeHTML` built from data
+- No unmarked HTML sinks: any `innerHTML`, `insertAdjacentHTML` or `unsafeHTML` built from data
   must carry an `// html-sink-ok: <reason>` comment, because that is a class CodeQL's JavaScript
   analysis misses here.
-- **Conformance:** the browser calculation engine runs the same conformance cases as the C# one,
+- Conformance: the browser calculation engine runs the same conformance cases as the C# one,
   so a rule can't mean two different things.
-- **Generated docs current:** the package's marketplace description is generated from the README,
+- Generated docs current: the package's marketplace description is generated from the README,
   and CI fails if it is stale.
-- **Vendored assets self-contained:** a test checks that vendored CSS doesn't reference files that
+- Vendored assets self-contained: a test checks that vendored CSS doesn't reference files that
   weren't vendored.
 
 When the same review comment comes up twice, ask whether it can be one of these.
@@ -124,19 +124,19 @@ Security has several distinct layers, and each tool sees only its own.
 
 | Layer | Guardrail | Sees | Blocks |
 |---|---|---|---|
-| **SAST** (static) | CodeQL `security-extended`, C# and JS/TS | Injection, unsafe data flow, deserialisation, open redirects | Yes |
-| | Analyzer security rules | Weak crypto, insecure defaults | Yes |
+| SAST (static) | CodeQL `security-extended`, C# and JS/TS | Injection, unsafe data flow, deserialisation, open redirects | Yes |
+| | Analyser security rules | Weak crypto, insecure defaults | Yes |
 | | Repo rules (HTML sinks, above) | Patterns the generic tools miss | Yes |
-| **Pipeline as code** | Zizmor | Template injection, unpinned actions, persisted credentials, broad permissions | Yes |
-| **DAST** (dynamic) | ZAP baseline, anonymous and signed in | Headers, cookie flags, cache control, disclosure in what the server actually sends | Yes, once triaged |
+| Pipeline as code | Zizmor | Template injection, unpinned actions, persisted credentials, broad permissions | Yes |
+| DAST (dynamic) | ZAP baseline, anonymous and signed in | Headers, cookie flags, cache control, disclosure in what the server actually sends | Yes, once triaged |
 | | Real-browser escaping tests | Script injection through rendered data | Yes |
 | | Post-deploy probe | A deployed endpoint that answers an anonymous caller | Fails the deploy |
-| **SCA** (dependencies) | Vulnerability gate, dependency review | Known High and Critical advisories, direct and transitive | Yes |
+| SCA (dependencies) | Vulnerability gate, dependency review | Known High and Critical advisories, direct and transitive | Yes |
 | | Dependabot with a 7-day cooldown | Outdated packages; a compromised release before it is pulled | Opens PRs |
-| **Secrets** | gitleaks over the tree | Keys, tokens, generated secrets in tracked files | Yes |
+| Secrets | gitleaks over the tree | Keys, tokens, generated secrets in tracked files | Yes |
 | | CI hygiene | Signing certificates and API keys left on a runner | Revoked and deleted at the end of the job |
-| **Provenance** | SHA-pinned actions, Trusted Publishing, version-matches-tag | A tampered action, a leaked publish key, publishing the wrong version | Yes |
-| **Boundaries** | Regression tests at each auth and tenancy seam | Isolation that silently regresses | Yes |
+| Provenance | SHA-pinned actions, Trusted Publishing, version-matches-tag | A tampered action, a leaked publish key, publishing the wrong version | Yes |
+| Boundaries | Regression tests at each auth and tenancy seam | Isolation that silently regresses | Yes |
 
 ### SAST: CodeQL and friends
 
@@ -152,11 +152,11 @@ the app on the runner, spiders it and runs passive rules only (no attacks): miss
 security headers (CSP, HSTS, `X-Content-Type-Options`), cookie flags (`Secure`, `HttpOnly`,
 `SameSite`), cache control on sensitive pages, information disclosure, server banners.
 
-- **Scan signed in, too.** A second leg logs in and replays the session cookie, so the pages
+- Scan signed in, too. A second leg logs in and replays the session cookie, so the pages
   behind sign-in, most of the surface, are scanned.
-- **Triage into `.zap/rules.tsv`.** Each finding is fixed (usually a header or cookie setting) or
+- Triage into `.zap/rules.tsv`. Each finding is fixed (usually a header or cookie setting) or
   recorded with an action and a reason. `IGNORE` without a reason is not allowed.
-- **Then make it blocking** with `fail-action: true`, and add it to the ruleset.
+- Then make it blocking with `fail-action: true`, and add it to the ruleset.
 
 Two cheaper dynamic checks complement it: browser tests that push hostile data through the real
 rendering and assert it stays inert, and a probe after every deploy that calls a protected endpoint
@@ -199,14 +199,14 @@ A big performance regression is a must-be failure: a page that takes ten seconds
 guards against that without pretending to benchmark on noisy shared runners (see the
 [guide](../docs/tools/k6.md)):
 
-- **Nightly, not per PR.** It boots the full app and holds load for about a minute.
-- **Thresholds, not targets:** under 1% errors, 95th percentile under a generous per-scenario
+- Nightly, not per PR. It boots the full app and holds load for about a minute.
+- Thresholds, not targets: under 1% errors, 95th percentile under a generous per-scenario
   limit, checks above 99%. Set to catch an order-of-magnitude change.
-- **Two profiles:** `smoke` by default, `stress` on demand to find the limit.
-- **Read paths only** unless the app has real per-user identity; writes against one shared demo
+- Two profiles: `smoke` by default, `stress` on demand to find the limit.
+- Read paths only unless the app has real per-user identity; writes against one shared demo
   identity measure contention on that identity, not the app.
-- **Tag requests by name** so a regression points at a page.
-- **Never against production**, and only against instances you own.
+- Tag requests by name so a regression points at a page.
+- Never against production, and only against instances you own.
 
 ## 5. Knowledge
 
@@ -265,11 +265,11 @@ reported, not obeyed. Downloaded code is read before it is run, and run from its
 When an agent acts against a running system, it gets its own identity with only the access the
 task needs: a dedicated API user rather than an admin's login, short-lived tokens, scopes limited to
 the tool. The system's own seams apply to it as to anyone: every MCP tool and endpoint carries an
-explicit authorization requirement, deny by default.
+explicit authorisation requirement, deny by default.
 
 ### Local checks before push
 
-The agent runs the fast checks itself before pushing: the build (which carries the analyzers), the
+The agent runs the fast checks itself before pushing: the build (which carries the analysers), the
 tests it touched, `node scripts/check-policies.mjs`, `node scripts/check-doc-links.mjs`,
 `cs delta origin/main`, and `gitleaks dir .` after running an app. A red CI run that a local check
 would have caught is wasted time for everyone watching.
@@ -310,12 +310,12 @@ bump every csproj before tagging" gets fixed correctly the first time.
 The estate doesn't use these yet. Each is a reasonable next guardrail; following the rule that
 standards come from practice, each would be proved in one repo before being added here:
 
-- **Fuzzing** of parsers that take untrusted input (blueprint YAML, CSV uploads).
-- **Mutation testing,** to measure whether the tests would notice a changed line.
-- **SBOMs and signed build provenance** (attestations) for published packages.
-- **Licence compliance** checks on dependencies.
-- **Container image scanning,** for any repo that ships images.
-- **Production monitoring and alerting** tied back to the must-be qualities.
+- Fuzzing of parsers that take untrusted input (blueprint YAML, CSV uploads).
+- Mutation testing, to measure whether the tests would notice a changed line.
+- SBOMs and signed build provenance (attestations) for published packages.
+- Licence compliance checks on dependencies.
+- Container image scanning, for any repo that ships images.
+- Production monitoring and alerting tied back to the must-be qualities.
 
 ## Adopting in an existing repo
 

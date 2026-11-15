@@ -21,21 +21,22 @@ that has to ask the same question again, the release step everyone forgets. Many
 shaped how we think about quality found it more useful to hunt down non-quality than to describe
 perfection:
 
-- **Genichi Taguchi** defined quality as the loss a product imparts to society after it ships.
+- Genichi Taguchi defined quality as the loss a product imparts to society after it ships.
   Every breakdown, delay, frustration and maintenance hour downstream is a loss; quality is the
   absence of those losses.
-- **Taiichi Ohno**, in the Toyota Production System, worked by removing *muda*, waste: anything
-  that doesn't add value or interrupts flow. Waiting, defects, rework, overprocessing,
-  unnecessary motion. Quality emerges when the obstacles to flow are gone.
-- **Noriaki Kano** called the baseline layer of quality *must-be*: things nobody praises when they
+- Taiichi Ohno, in the Toyota Production System, worked by removing *muda*. It is usually
+  translated as waste, but no English word fits exactly: it is closer to futility, effort that
+  adds nothing. In practice that means anything that doesn't add value or interrupts flow:
+  waiting, defects, rework, overprocessing, unnecessary motion. Quality emerges when the obstacles to flow are gone.
+- Noriaki Kano called the baseline layer of quality *must-be*: things nobody praises when they
   work and everybody notices when they don't. Brakes, not cup holders.
-- **Dieter Rams** asked that good design be unobtrusive. You only notice the plumbing when it
+- Dieter Rams asked that good design be unobtrusive. You only notice the plumbing when it
   leaks.
 
 Put together, they give a definition that is sharp enough to act on:
 
 > **Quality is the absence of breakdown, anywhere in the product, the process or the experience.**
-> Or more simply: **a system with nothing in the way.**
+> Or more simply: a system with nothing in the way.
 
 The advantage of a negative definition is that it is actionable. You can't tell a team, or an
 agent, how to "create excellence". Anyone on the ground can point to where the system is broken,
@@ -48,12 +49,12 @@ caused by breakdowns nobody sees.
 
 | Where | What non-quality looks like | What hunts it in this estate |
 |---|---|---|
-| **The product** | A request hangs for ten minutes; a page leaks another tenant's data; a security header is missing; a page is slow | Behavioural tests, CodeQL, [ZAP](../docs/tools/zap.md), [k6](../docs/tools/k6.md), boundary regression tests |
-| **The experience** | Wording that misleads ("taking longer than usual" on a wait that takes days); an inaccessible control; an error that doesn't say what to do | Plain-language rules, Playwright with semantic selectors, axe on every story, error states asserted twice |
-| **The code** | A method nobody can follow, a file that only grows, duplication that drifts | [Code budgets](../docs/tools/code-budgets.md), [CodeScene](../docs/tools/codescene.md) delta, warnings as errors |
-| **The process** | A flaky test that teaches everyone to re-run; a release step that lives in someone's head; a stacked PR closed by accident | Soak runs and root causes, release PRs and checks, written change flow |
-| **The knowledge** | A doc that describes last year's design; guidance an agent can't find; a rule with no reason | Doc link checks, current-state docs, the [harness](04-the-harness.md) rules, guidance evals |
-| **The supply chain** | A compromised package, a leaked key, an unpinned action | Vulnerability gate, secret scan, Zizmor, Dependabot cooldown, Trusted Publishing |
+| The product | A request hangs for ten minutes; a page leaks another tenant's data; a security header is missing; a page is slow | Behavioural tests, CodeQL, [ZAP](../docs/tools/zap.md), [k6](../docs/tools/k6.md), boundary regression tests |
+| The experience | Wording that misleads ("taking longer than usual" on a wait that takes days); an inaccessible control; an error that doesn't say what to do | Plain-language rules, Playwright with semantic selectors, axe on every story, error states asserted twice |
+| The code | A method nobody can follow, a file that only grows, duplication that drifts | [Code budgets](../docs/tools/code-budgets.md), [CodeScene](../docs/tools/codescene.md) delta, warnings as errors |
+| The process | A flaky test that teaches everyone to re-run; a release step that lives in someone's head; a stacked PR closed by accident | Soak runs and root causes, release PRs and checks, written change flow |
+| The knowledge | A doc that describes last year's design; guidance an agent can't find; a rule with no reason | Doc link checks, current-state docs, the [harness](04-the-harness.md) rules, guidance evals |
+| The supply chain | A compromised package, a leaked key, an unpinned action | Vulnerability gate, secret scan, Zizmor, Dependabot cooldown, Trusted Publishing |
 
 Each row is a kind of loss in Taguchi's sense, and each tool is a way of seeing it early, where it
 is cheap.
@@ -74,7 +75,7 @@ Quality can't be inspected into a product at the end; it has to be built into th
 makes it. A final review that catches problems is better than nothing, but it finds them late, at
 the most expensive point, and only the ones the reviewer happens to look for.
 
-So the estate moves checks to where the work happens: the analyzer fails the build in the editor,
+So the estate moves checks to where the work happens: the analyser fails the build in the editor,
 the size script fails before push, the security scanners run on every PR, the behavioural tests
 state what must stay true. Review then has a better job: judgement about design and intent, not
 hunting for missing headers.
@@ -97,8 +98,8 @@ Give it a check and it will meet the check every time.
 
 ### Understand variation: don't tamper
 
-Every process varies. Deming distinguished **common-cause** variation (the normal noise of the
-system as it is) from **special-cause** variation (something specific happened). Treating one as
+Every process varies. Deming distinguished common-cause variation (the normal noise of the
+system as it is) from special-cause variation (something specific happened). Treating one as
 the other makes things worse. His funnel experiment shows it: adjusting the aim after every drop
 of a marble, in response to noise, spreads the results wider than leaving it alone.
 
@@ -111,12 +112,12 @@ In software, tampering looks like:
 None of these change the system that produced the failure, so the failure rate is unchanged and
 now hidden. The method instead (see [Diagnosing the hard ones](07-diagnosis.md)):
 
-1. **Measure the rate.** Run it enough times to know whether it fails one in three or one in
+1. Measure the rate. Run it enough times to know whether it fails one in three or one in
    forty. A rate is a property of the system; a single failure is an anecdote.
-2. **Find the cause** with evidence: stack dumps, traces, a reproduction outside the framework.
-3. **Change the system** so that cause can't happen, and make the failure deterministic in a test
+2. Find the cause with evidence: stack dumps, traces, a reproduction outside the framework.
+3. Change the system so that cause can't happen, and make the failure deterministic in a test
    so it can never come back silently.
-4. **Measure again.** The new rate is the result.
+4. Measure again. The new rate is the result.
 
 A green re-run is not a fix. It is a sample.
 
@@ -126,10 +127,10 @@ Deming's cycle (from Walter Shewhart) treats every change as an experiment: plan
 do it small, study what actually happened, act on what you learned. The estate runs it at every
 scale:
 
-- **A change:** write the test that states the behaviour, make it pass, read what CI and
+- A change: write the test that states the behaviour, make it pass, read what CI and
   CodeScene say, adjust.
-- **A fix:** reproduce, change, soak, compare the rates.
-- **The standards:** a practice is tried in one repo, studied, and only then promoted into
+- A fix: reproduce, change, soak, compare the rates.
+- The standards: a practice is tried in one repo, studied, and only then promoted into
   [`STANDARDS.md`](../STANDARDS.md), with the evidence named.
 
 ### Drive out fear
@@ -154,7 +155,7 @@ The cost of a breakdown grows with the distance it travels before someone sees i
 ```mermaid
 flowchart LR
   A["Editor
-  analyzer warning"] --> B["Pre-push
+  analyser warning"] --> B["Pre-push
   budget, doc links"] --> C["PR
   tests, CodeQL, ZAP"] --> D["Release
   version checks"] --> E["Production

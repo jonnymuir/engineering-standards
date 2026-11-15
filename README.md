@@ -67,7 +67,7 @@ For a new repo, or an existing one being brought up to standard:
 | ZAP baseline | ✅ | ✅ (with signed-in leg) | ✅ | ✅ (advisory until it has content) |
 | Ruleset on `main` | ✅ | ✅ | ✅ | ✅ |
 | CodeScene delta | ✅ | ✅ | ✅ | ✅ |
-| `TreatWarningsAsErrors` and analyzers | ✅ (logging baseline) | ✅ | ✅ | ✅ |
+| `TreatWarningsAsErrors` and analysers | ✅ (logging baseline) | ✅ | ✅ | ✅ |
 | Size and complexity budgets | ✅ | ✅ | ✅ | ✅ |
 | k6 performance tripwire | ✅ | ✅ | ✅ | ❌ (until it has content) |
 | `CLAUDE.md` links to `STANDARDS.md` | ✅ | ✅ | ✅ | ✅ |

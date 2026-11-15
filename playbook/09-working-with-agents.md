@@ -20,14 +20,14 @@ In Brooks's surgical team every role served one person's design (see
 [Principles](01-principles.md#a-surgical-team-with-agents-in-every-other-chair)). Give agents work
 in those terms:
 
-- **Copilot:** "Implement this, within these constraints; tell me where the design pushes back."
-- **Toolsmith:** "Write a check that fails when this mistake recurs."
-- **Tester:** "State this behaviour as tests at the public seam; show me they fail without the
+- Copilot: "Implement this, within these constraints; tell me where the design pushes back."
+- Toolsmith: "Write a check that fails when this mistake recurs."
+- Tester: "State this behaviour as tests at the public seam; show me they fail without the
   change."
-- **Language lawyer:** "Read the upstream source on every supported branch and tell me exactly
+- Language lawyer: "Read the upstream source on every supported branch and tell me exactly
   where this goes wrong."
-- **Editor:** "Write the release notes from these commits, for a package user."
-- **Administrator:** "Work through the dependency PRs; merge what is green and superseded-checked;
+- Editor: "Write the release notes from these commits, for a package user."
+- Administrator: "Work through the dependency PRs; merge what is green and superseded-checked;
   report the rest."
 
 Several roles can run at once. The surgeon's job is to keep them pointed at one design and to make
@@ -61,27 +61,27 @@ is a wasted round trip.
 The person can't watch every step, so the report is the system's view of what happened. A report
 that sounds better than the truth is a breakdown in its own right.
 
-- **Lead with the outcome,** then the detail.
-- **Say what was verified and how:** "768 tests pass; the byte-for-byte comparison of 12 awkward
+- Lead with the outcome, then the detail.
+- Say what was verified and how: "768 tests pass; the byte-for-byte comparison of 12 awkward
   files is identical; the live end-to-end run was not done."
-- **Give rates, not anecdotes:** "stalled once in 40 runs under heavy load", not "seems fixed".
-- **Name residual risk and where it lives:** "the remaining gap is inside the framework; it is
+- Give rates, not anecdotes: "stalled once in 40 runs under heavy load", not "seems fixed".
+- Name residual risk and where it lives: "the remaining gap is inside the framework; it is
   fixed in their next major version".
-- **Own mistakes plainly:** what went wrong, what it affected, what was done about it, and what
+- Own mistakes plainly: what went wrong, what it affected, what was done about it, and what
   wasn't affected. In this estate an agent's failed shell command partially applied one of the
   person's old stashes to a scratch copy; the report said so, said the stash was untouched and the
   main working copy wasn't affected, and the lesson (never chain a stash pop after a command that
   might fail) went into practice.
-- **Don't predict a result that hasn't arrived.** A background job still running is "still
+- Don't predict a result that hasn't arrived. A background job still running is "still
   running".
 
 ## Make corrections durable
 
 When a person corrects an agent, the correction should outlive the session:
 
-1. **Memory:** one fact, with why it matters and how to apply it, linked to related entries.
-2. **The repo's `CLAUDE.md`,** if it is a standing rule for that repo.
-3. **[`STANDARDS.md`](../STANDARDS.md)** and, if possible, a check, once it holds across repos.
+1. Memory: one fact, with why it matters and how to apply it, linked to related entries.
+2. The repo's `CLAUDE.md`, if it is a standing rule for that repo.
+3. [`STANDARDS.md`](../STANDARDS.md) and, if possible, a check, once it holds across repos.
 
 The test of whether this is working: the person stops having to say the same thing twice. Several
 rules in the standards (no em dashes, docs describe current state, behavioural tests) began as a
@@ -91,18 +91,18 @@ person saying "I've told you this before".
 
 These came from real corrections in this estate:
 
-- **Is this constraint intent or scope?** Before building a compatibility layer around a
+- Is this constraint intent or scope? Before building a compatibility layer around a
   limitation, check whether it was a decision or just where the code had got to.
-- **Capability contracts, not runtime guesses.** When one component needs to know what another can
+- Capability contracts, not runtime guesses. When one component needs to know what another can
   do, derive it from something both share (a closed type list, a build artefact), not by calling
   the other at runtime or assuming.
-- **Describe references precisely.** When matching a design, report measurements as approximate
+- Describe references precisely. When matching a design, report measurements as approximate
   ranges ("a slight radius, about 4 to 6 px") rather than rounding to extremes ("square corners").
-- **Disposable means disposable.** If a local database is seeded from code, wipe it to test a
+- Disposable means disposable. If a local database is seeded from code, wipe it to test a
   seeding change rather than patching it by hand.
-- **Generated code is held to the same standard** as handwritten code, because people and agents
+- Generated code is held to the same standard as handwritten code, because people and agents
   will maintain it.
-- **Treat the person's working copy as theirs.** Use a separate worktree for agent work, leave
+- Treat the person's working copy as theirs. Use a separate worktree for agent work, leave
   uncommitted changes alone, and never discard or overwrite without looking first.
 
 ## When the agent is blocked

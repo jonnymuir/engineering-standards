@@ -17,7 +17,7 @@ are none. Do not fix anything unless asked.
 
 ## Security
 
-- A new route, endpoint or tool without an explicit authorization requirement, or anonymous access
+- A new route, endpoint or tool without an explicit authorisation requirement, or anonymous access
   without a written reason.
 - An auth or token flow that departs from the spec.
 - A hardcoded actor, tenant or allow-all default in library code.

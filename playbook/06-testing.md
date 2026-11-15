@@ -41,10 +41,10 @@ breaks it, which is exactly the job.
 
 Pick the seam the behaviour is visible at:
 
-- **A public method** of a domain or engine type, with real in-memory collaborators.
-- **An HTTP response** from a test host running the real pipeline (routing, auth, middleware).
-- **Rendered output**: an HTML fragment, a generated file's exact bytes.
-- **The visible UI**: Playwright against a Storybook story, or against the booted app when the
+- A public method of a domain or engine type, with real in-memory collaborators.
+- An HTTP response from a test host running the real pipeline (routing, auth, middleware).
+- Rendered output: an HTML fragment, a generated file's exact bytes.
+- The visible UI: Playwright against a Storybook story, or against the booted app when the
   behaviour only emerges there.
 
 Needing `InternalsVisibleTo` is a sign the test is at the wrong level. Look for the public seam that
@@ -75,7 +75,7 @@ slow and have more ways to flake.
 The safest way to change a dependency, or rewrite code, is to first capture what it does today:
 
 1. Write tests that state the current behaviour at the public seam, including the awkward cases.
-2. Run them against the **old** version. They must pass, or they aren't describing reality.
+2. Run them against the old version. They must pass, or they aren't describing reality.
 3. Make the change.
 4. Run them against the new version. Every difference is now visible and deliberate.
 
@@ -100,7 +100,7 @@ could just mean the comparison wasn't comparing.
 ## Making rare bugs deterministic
 
 An intermittent failure is a test that hasn't been written yet. Once you know the cause, write a
-test that **forces** it every time, then fix the code.
+test that forces it every time, then fix the code.
 
 The estate's example is a database race. On SQLite, some framework operations read and then write
 inside a deferred transaction; if another connection commits in the gap, the write can never
@@ -116,10 +116,10 @@ idea works for any race: inject the other party's action at the worst possible m
 
 Two cautions from that work:
 
-- **Inject narrowly.** A first version of the hook committed on behalf of every lock statement
+- Inject narrowly. A first version of the hook committed on behalf of every lock statement
   across the whole process, which planted commits into unrelated transactions' gaps and made
   unrelated code fail. Target the one gap you are testing.
-- **If the injection can't reliably hit the gap, drop it.** A second gap only opened when a cache
+- If the injection can't reliably hit the gap, drop it. A second gap only opened when a cache
   happened to be cold. A hook for it passed with and without the fix, so it proved nothing and was
   removed. That fix rests on the trace evidence and a soak run instead, and the PR says so.
 
@@ -142,14 +142,14 @@ it hides the rate without changing it.
 
 Treat a flaky test as an incident:
 
-1. **Measure the rate** with a soak: run the suite repeatedly under realistic load (in the estate,
+1. Measure the rate with a soak: run the suite repeatedly under realistic load (in the estate,
    several test projects booting at once, as CI does) and count. "One in fourteen" is information;
    "it failed once" isn't.
-2. **Capture evidence while it is failing**: stack dumps, logs, traces. See
+2. Capture evidence while it is failing: stack dumps, logs, traces. See
    [Diagnosing the hard ones](07-diagnosis.md).
-3. **Fix the cause**, make it deterministic in a test if you can, and **soak again** to compare
+3. Fix the cause, make it deterministic in a test if you can, and soak again to compare
    rates.
-4. **Be honest about what is left.** If part of the cause is in someone else's code, say so, with
+4. Be honest about what is left. If part of the cause is in someone else's code, say so, with
    the rate, rather than calling it fixed.
 
 Don't merge a "fix" for a flaky test on the strength of one green run.
@@ -158,15 +158,15 @@ Don't merge a "fix" for a flaky test on the strength of one green run.
 
 Rules for browser tests, from [STANDARDS.md](../STANDARDS.md#3-testing-behavioural-contracts-not-implementation-mirrors):
 
-- **Semantic selectors only:** `getByRole`, `getByLabel`, `getByText`, `aria-*`, `data-*` hooks.
+- Semantic selectors only: `getByRole`, `getByLabel`, `getByText`, `aria-*`, `data-*` hooks.
   Never CSS classes or component tag names. Semantic selectors double as an accessibility check:
   if a test can't find a control by its role and name, neither can a screen reader.
-- **Wait for a state, never a duration.** No fixed sleeps. Start waiting for navigation before the
+- Wait for a state, never a duration. No fixed sleeps. Start waiting for navigation before the
   click that triggers it, or the wait can resolve against the old page.
-- **Assert error states twice:** the `[role="alert"]` summary and the field-level message.
-- **Prefer specific targets.** A generic `button[name="Action"]` can match a "Change" link before
+- Assert error states twice: the `[role="alert"]` summary and the field-level message.
+- Prefer specific targets. A generic `button[name="Action"]` can match a "Change" link before
   the real submit button and quietly send a journey backwards.
-- **Accessibility is a test,** not a report: an axe violation on a story fails the suite.
+- Accessibility is a test, not a report: an axe violation on a story fails the suite.
 
 ## Business rules and calculations
 

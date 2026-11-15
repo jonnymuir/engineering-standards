@@ -43,13 +43,13 @@ flowchart TD
 
 A failure you can't observe can't be diagnosed. Set up the capture before you try to reproduce:
 
-- **A watchdog.** A loop that runs the suite and, when a run exceeds a time limit, takes several
+- A watchdog. A loop that runs the suite and, when a run exceeds a time limit, takes several
   stack dumps a few seconds apart before killing it. (`dotnet-stack report -p <pid>` for .NET;
   every runtime has an equivalent.) Several dumps show what is stuck and what is moving.
-- **Logs from the failing run,** uploaded by CI on failure, not only on success.
-- **Target the right process.** A test runner and its host often share a command line; the first
+- Logs from the failing run, uploaded by CI on failure, not only on success.
+- Target the right process. A test runner and its host often share a command line; the first
   dumps here were of the runner, not the host. Check what you dumped.
-- **Know the limits of a tool.** Synchronous stack dumps don't show async waits. When every thread
+- Know the limits of a tool. Synchronous stack dumps don't show async waits. When every thread
   looks idle, the stuck work is awaiting something; reach for a tracer or a heap dump instead.
 
 ## Falsify the theory
@@ -86,11 +86,11 @@ honest.
 
 The cause was in the framework, not the application, so the next step was reading the framework:
 
-- **Decompile what you run.** Decompiling the exact binary version in use (`ilspycmd` for .NET)
+- Decompile what you run. Decompiling the exact binary version in use (`ilspycmd` for .NET)
   answered questions the docs couldn't: the provider wraps connections to prefer deferred
   transactions; the template repository runs an uncached alias check before inserting; the
   document type save publishes its "saving" notification before taking its lock.
-- **Then check the current upstream source** on each supported branch, because the version you
+- Then check the current upstream source on each supported branch, because the version you
   run may not be the version being fixed.
 
 ## Trace when dumps aren't enough

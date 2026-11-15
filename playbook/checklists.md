@@ -28,11 +28,11 @@ where it is explained.
 ## Before opening a PR
 
 - [ ] Tests state behaviour from outside; I have seen the new ones fail ([testing](06-testing.md))
-- [ ] Build with analyzers, tests, `node scripts/check-policies.mjs`,
+- [ ] Build with analysers, tests, `node scripts/check-policies.mjs`,
       `node scripts/check-doc-links.mjs`
 - [ ] `cs delta origin/main` shows no file worse ([CodeScene](05-guardrails.md#codescene-keeping-code-healthy-change-by-change))
 - [ ] `git status` clean of runtime state; `gitleaks dir .` if an app was run
-- [ ] Every new endpoint or tool has an explicit authorization requirement, and a test proves it
+- [ ] Every new endpoint or tool has an explicit authorisation requirement, and a test proves it
 - [ ] Threat-surface changes named in the commit body
 - [ ] Docs describe current state; new docs indexed; no em dashes
 - [ ] Conventional Commit subject a package user would understand

@@ -20,7 +20,7 @@ directing and reviewing. What doesn't compress is knowing whether it was worth b
 it solved the problem, and what it broke for whom.
 
 [SE Radio episode 746](https://se-radio.net/2026/11/se-radio-746-marian-kamenistak-on-product-management-for-software-engineers/),
-with Marian Kamenistak, frames the response as a **Product Builder**: an engineer who combines
+with Marian Kamenistak, frames the response as a Product Builder: an engineer who combines
 technical skill with product thinking and market awareness, and owns the whole lifecycle from
 understanding the customer's need to measuring how the product is actually used, with success
 measures defined up front. That is the posture this playbook asks of everyone working in a repo,
@@ -57,10 +57,10 @@ flowchart LR
 
 Before a line of code, write three sentences in the issue or PR:
 
-- **Who** it is for (a citizen applying for a licence, a caseworker clearing a queue, a developer
+- Who it is for (a citizen applying for a licence, a caseworker clearing a queue, a developer
   installing the package).
-- **What problem** it solves for them, in their words, not the system's.
-- **How we will know** it worked.
+- What problem it solves for them, in their words, not the system's.
+- How we will know it worked.
 
 An agent asked to "add a dashboard" will build a dashboard. An agent told "caseworkers can't see
 which applications have waited longest, so urgent ones are missed; done when the oldest waiting
@@ -71,15 +71,15 @@ item is visible without scrolling" will build the right thing, and can test it.
 A success measure chosen after the fact will always be met. Decide it first, and make it
 observable:
 
-- **Behavioural:** a test that states the user-visible outcome (see [Testing](06-testing.md)).
+- Behavioural: a test that states the user-visible outcome (see [Testing](06-testing.md)).
   This is the acceptance criterion in executable form.
-- **Quality:** a performance threshold in k6, a ZAP finding that must stay closed, a page that
+- Quality: a performance threshold in k6, a ZAP finding that must stay closed, a page that
   must pass axe.
-- **Use:** whether people actually do the thing. Count it in a way that respects them: aggregate
+- Use: whether people actually do the thing. Count it in a way that respects them: aggregate
   counts, error rates, task completion in a usability session, support questions that stop
   arriving. One estate product stores no user data at all by design, so its measures are the
   ones that need none.
-- **Agent outcomes:** for guidance aimed at agents, an evaluation that checks what the agent
+- Agent outcomes: for guidance aimed at agents, an evaluation that checks what the agent
   built, as in the [harness chapter](04-the-harness.md#testing-the-guidance).
 
 ### 3. Build the smallest thing that tests it
@@ -110,9 +110,9 @@ Kano's model separates three kinds of quality, and they need different handling:
 
 | Kind | Example | How to treat it |
 |---|---|---|
-| **Must-be** | Sign-in works and is secure; data doesn't leak between tenants; the page is accessible; wording doesn't mislead | Non-negotiable. Guarded by checks and tests. Never traded for a deadline |
-| **Performance** | Pages load fast; a queue clears quickly; fewer steps to finish a task | Measured and improved deliberately, with thresholds that catch regressions |
-| **Delight** | A themed waiting icon on a butterfly-sighting service | Optional, opt-in, off by default, and never at the expense of the first two |
+| Must-be | Sign-in works and is secure; data doesn't leak between tenants; the page is accessible; wording doesn't mislead | Non-negotiable. Guarded by checks and tests. Never traded for a deadline |
+| Performance | Pages load fast; a queue clears quickly; fewer steps to finish a task | Measured and improved deliberately, with thresholds that catch regressions |
+| Delight | A themed waiting icon on a butterfly-sighting service | Optional, opt-in, off by default, and never at the expense of the first two |
 
 Nobody thanks you for must-be qualities, and they are where most of the effort in this playbook
 goes, because when one fails, quality drops to zero regardless of everything else. Public-service
@@ -123,20 +123,20 @@ restrained version is the default and the decorative one is a deliberate author 
 
 Most product decisions are small and made by whoever is building. A few habits keep them good:
 
-- **Ask whether a constraint is real intent or current scope.** Planning an extraction, an agent
+- Ask whether a constraint is real intent or current scope. Planning an extraction, an agent
   proposed generalising a single-queue authoring screen so that one consumer could configure it
   back down. The single-queue limit turned out to be just how far the code had got, not a product
   decision, and the whole generalisation disappeared from the plan. When unsure, ask; don't build
   a compatibility layer around a guess.
-- **Prefer the simple version.** "Why can't it be this simple?" is a product question. The
+- Prefer the simple version. "Why can't it be this simple?" is a product question. The
   simplest design that meets the need is easier to secure, test, explain and change.
-- **Keep examples generic.** Demo and example content in a product repo should be broadly
+- Keep examples generic. Demo and example content in a product repo should be broadly
   recognisable (a licence application, a callback request), not a niche domain only one customer
   understands.
-- **Recommend, then wait, on direction.** For a non-trivial choice, an agent gives a
+- Recommend, then wait, on direction. For a non-trivial choice, an agent gives a
   recommendation and the key trade-off in a few sentences, and builds once the person agrees. On
   everything else it gets on with the work.
-- **Platform parity is part of the feature.** If a product has an iOS and an Android app, a
+- Platform parity is part of the feature. If a product has an iOS and an Android app, a
   feature isn't done until both have it. "Android later" quietly becomes "Android never".
 
 ## What this asks of an agent

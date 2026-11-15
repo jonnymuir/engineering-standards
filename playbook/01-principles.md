@@ -18,7 +18,7 @@
 
 In *The Mythical Man-Month* (1975), Fred Brooks put forward Harlan Mills's idea of organising a
 software team like a surgical team. One surgeon does the critical design and code. Everyone else
-exists to make that one person effective. Brooks's reason was **conceptual integrity**, which he
+exists to make that one person effective. Brooks's reason was conceptual integrity, which he
 called the most important consideration in system design: a system that reflects one coherent set
 of ideas is better than one that reflects many good but uncoordinated ones. The catch was cost:
 around ten people supporting one.
@@ -27,14 +27,14 @@ Agents change the economics. The supporting roles map almost one for one:
 
 | Brooks's role | What it did | In an AI-native team |
 |---|---|---|
-| **Surgeon** | Designs, writes the critical parts, owns the result | The person: holds the design, decides direction, reviews, owns every irreversible step |
-| **Copilot** | Alter ego who can do any part, thinks alongside | An agent pairing on the work: proposes, challenges, implements under review |
-| **Toolsmith** | Builds the special tools the surgeon needs | Agents writing custom checks, scripts, test hooks, diagnostics |
-| **Tester** | Devises tests, from the specification | Agents writing behavioural tests, soak runs, fault injection; CI running them on every change |
-| **Language lawyer** | Knows the language and its corners deeply | Agents reading specs, upstream source and decompiled binaries |
-| **Editor** | Turns the surgeon's notes into documentation | Agents drafting docs, PR bodies and release notes in the house style |
-| **Program clerk** | Keeps the records of the work | Git, CI and the changelog: the record keeps itself |
-| **Administrator** | Handles the logistics | Agents handling dependency PRs, CI waits, release chains and status |
+| Surgeon | Designs, writes the critical parts, owns the result | The person: holds the design, decides direction, reviews, owns every irreversible step |
+| Copilot | Alter ego who can do any part, thinks alongside | An agent pairing on the work: proposes, challenges, implements under review |
+| Toolsmith | Builds the special tools the surgeon needs | Agents writing custom checks, scripts, test hooks, diagnostics |
+| Tester | Devises tests, from the specification | Agents writing behavioural tests, soak runs, fault injection; CI running them on every change |
+| Language lawyer | Knows the language and its corners deeply | Agents reading specs, upstream source and decompiled binaries |
+| Editor | Turns the surgeon's notes into documentation | Agents drafting docs, PR bodies and release notes in the house style |
+| Program clerk | Keeps the records of the work | Git, CI and the changelog: the record keeps itself |
+| Administrator | Handles the logistics | Agents handling dependency PRs, CI waits, release chains and status |
 
 Two things follow. First, conceptual integrity stays with the person: agents are fast enough to
 produce a lot of plausible, inconsistent code, so the design has to be held somewhere, and written
@@ -43,8 +43,8 @@ knowledge (the [harness](04-the-harness.md)), shared standards, and [guardrails]
 that check every pair of hands the same way. A surgeon with ten fast assistants and no shared
 system gets ten different operations.
 
-Brooks's later essay *No Silver Bullet* separated **essential** complexity (the hard problem itself:
-what to build, how the parts fit) from **accidental** complexity (the effort of expressing it).
+Brooks's later essay *No Silver Bullet* separated essential complexity (the hard problem itself:
+what to build, how the parts fit) from accidental complexity (the effort of expressing it).
 Agents strip away a great deal of the accidental. The essential remains, and it is exactly the
 surgeon's work: the design, the product judgement, the decisions that can't be undone.
 
@@ -54,20 +54,20 @@ Lockheed's Skunk Works, under Kelly Johnson, built aircraft in a fraction of the
 fraction of the usual people, working by a short list of rules. Several read as if written for a
 team of people and agents:
 
-- **Small, good, and trusted.** The project leader has near-complete authority, and the number of
+- Small, good, and trusted. The project leader has near-complete authority, and the number of
   people involved is restricted "in an almost vicious manner". In an AI-native team the person
   count is tiny by design; agents carry the volume.
-- **A very simple release system, flexible for making changes.** Here: a PR, a set of automated
+- A very simple release system, flexible for making changes. Here: a PR, a set of automated
   gates, a release PR and a tag. No change board, no ceremony, and every step reversible except the
   tag.
-- **A minimum of reports, but important work recorded thoroughly.** No status theatre. The record
+- A minimum of reports, but important work recorded thoroughly. No status theatre. The record
   is the commits, the PRs, the tests and docs that describe what is true now.
-- **Push inspection back to the people doing the work, and don't duplicate it.** This is Deming's
+- Push inspection back to the people doing the work, and don't duplicate it. This is Deming's
   "build quality in" in engineering language (see [Quality](02-quality.md)): the checks run where
   the work happens, not in a separate gate at the end.
-- **The builders test the product themselves.** The team owns its work end to end, all the way to
+- The builders test the product themselves. The team owns its work end to end, all the way to
   whether it helps the user (see [Product](03-product.md)).
-- **Close, daily trust with the customer.** Short loops from need to release to feedback.
+- Close, daily trust with the customer. Short loops from need to release to feedback.
 
 The motto was "be quick, be quiet, be on time". Speed in this sense never comes from skipping
 quality. It comes from small, reversible steps, trust that rests on guardrails rather than on
@@ -108,15 +108,15 @@ It is tempting to write separate material for agents: terse prompt fragments, sp
 instructions in capitals. Resist it. The qualities that make guidance work for an agent are the
 qualities that make it work for a person:
 
-- **Current.** It says what is true now. History belongs in commits and PRs (see
+- Current. It says what is true now. History belongs in commits and PRs (see
   [STANDARDS.md](../STANDARDS.md#5-documentation)).
-- **Located.** It is in the file the reader opens for the task: the repo's `CLAUDE.md`, the
+- Located. It is in the file the reader opens for the task: the repo's `CLAUDE.md`, the
   package README, the error message, the comment above the surprising line.
-- **Specific.** A command that runs, a path that exists, a number with a unit. "Keep files small"
+- Specific. A command that runs, a path that exists, a number with a unit. "Keep files small"
   is advice; "C# files 400 lines, enforced by `scripts/check-policies.mjs`" is a rule.
-- **Reasoned.** It says why. A reader who knows why can handle the case the rule didn't foresee;
+- Reasoned. It says why. A reader who knows why can handle the case the rule didn't foresee;
   one who only knows the rule will apply it where it doesn't fit.
-- **Plain.** Short sentences, active voice, no jargon that needs a glossary.
+- Plain. Short sentences, active voice, no jargon that needs a glossary.
 
 When the agent misreads guidance, the fix is almost never "add a stronger instruction for the
 agent". It is to make the guidance clearer for everyone, or to turn it into a check.
@@ -130,9 +130,9 @@ tests. The handbook then only has to explain them.
 
 Two properties make a check trustworthy:
 
-1. **It fails on the thing you care about,** and you have seen it fail. A check that has never gone
+1. It fails on the thing you care about, and you have seen it fail. A check that has never gone
    red might not be checking anything (see [Testing](06-testing.md#a-test-that-cannot-fail-proves-nothing)).
-2. **It says how to fix what it found.** The size script names the file, its size and the budget;
+2. It says how to fix what it found. The size script names the file, its size and the budget;
    the release workflow says which version file disagrees with the tag. The message is the
    documentation at the moment it is needed.
 
@@ -147,7 +147,7 @@ stalls everything; ignoring them makes the rule meaningless. The ratchet is the 
 - The baseline is stale if something shrank and the baseline wasn't lowered, which is also a
   failure, so it can't quietly go out of date.
 
-The estate uses this for file and method sizes (`.policy/size-baseline.json`), analyzer findings
+The estate uses this for file and method sizes (`.policy/size-baseline.json`), analyser findings
 (`.editorconfig` baseline blocks) and logging style. Quality then only moves one way, and nobody
 needs a "cleanup sprint".
 

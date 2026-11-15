@@ -25,11 +25,11 @@ holds for a one-line fix and for an agent's change alike.
 
 A good PR body is written for a reviewer, and later a reader, with no context:
 
-- **What and why**, in plain language.
-- **What was checked**: the commands run and their results, including what was not verified (a
+- What and why, in plain language.
+- What was checked: the commands run and their results, including what was not verified (a
   live end-to-end run, a measure that can't be seen from CI).
-- **What changes for users**, and for package consumers, how to upgrade.
-- **Threat surface**: anything that moves it, named.
+- What changes for users, and for package consumers, how to upgrade.
+- Threat surface: anything that moves it, named.
 
 The narrative of how a fix was found belongs here and in the commit, never in the docs (see
 [STANDARDS.md](../STANDARDS.md#5-documentation)).
@@ -51,9 +51,9 @@ A stacked PR targets another PR's branch. Merge the parent with `--delete-branch
 closes the child, because its base no longer exists. The child can't be reopened onto the deleted
 base, so the work has to be recreated as a new PR.
 
-- **Before merging the parent,** retarget the child to `main`:
+- Before merging the parent, retarget the child to `main`:
   `gh pr edit <child> --base main`.
-- **After the parent squash-merges,** the child still carries the parent's original commits. Merge
+- After the parent squash-merges, the child still carries the parent's original commits. Merge
   `main` into the child (it resolves to `main` plus the child's own change) rather than rebasing
   and force-pushing.
 
@@ -85,19 +85,19 @@ pin today's behaviour in tests first (see [Testing](06-testing.md#pin-behaviour-
 A release is the one routine step that can't be undone: a version published to a registry is
 there for good. So it is split into a reviewable part and an irreversible part:
 
-1. **Release PR** (the `/release` command in the [plugin](../plugin/)): infer the bump from the
+1. Release PR (the `/release` command in the [plugin](../plugin/)): infer the bump from the
    commits since the last tag, bump every version file, write the changelog entry, update any
    compatibility table in the README and regenerate derived docs, run the pre-release checks.
-2. **Merge** it once green.
-3. **Tag** the merge commit `v{version}`. The tag triggers the publish workflow, which checks every
+2. Merge it once green.
+3. Tag the merge commit `v{version}`. The tag triggers the publish workflow, which checks every
    version file matches the tag, builds, tests, packs and publishes with Trusted Publishing.
    A person confirms this step.
-4. **Wait for the registry** to index the new version before anything downstream depends on it.
+4. Wait for the registry to index the new version before anything downstream depends on it.
 
 ### Releasing a chain
 
 When packages depend on each other across repos, release in dependency order, each against the
-**published** upstream version:
+published upstream version:
 
 ```mermaid
 flowchart LR

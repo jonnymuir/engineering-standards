@@ -27,45 +27,45 @@ because of "clear write-ups, solid tests, and real API responses to test against
 
 ## Before you write anything
 
-1. **Read the guides.** `CONTRIBUTING.md`, the issue and PR templates, branch naming, which branch
+1. Read the guides. `CONTRIBUTING.md`, the issue and PR templates, branch naming, which branch
    to target, and the project's own agent guide if it has one. Large projects often say when to
    open an issue first and what changes they don't want (breaking changes, new config options,
    broad refactors).
-2. **Search.** The error text, the mechanism, the code path. Check open and closed issues, and
+2. Search. The error text, the mechanism, the code path. Check open and closed issues, and
    recent PRs on newer branches.
-3. **Check whether it is fixed already.** A newer major version may have fixed it. If it has, the
+3. Check whether it is fixed already. A newer major version may have fixed it. If it has, the
    useful contribution may be evidence on an existing backport request, or nothing at all.
-4. **Confirm on current source,** on each supported branch, not only the binary you run.
+4. Confirm on current source, on each supported branch, not only the binary you run.
 
 ## The issue
 
 Use the project's template fields, and fill them with specifics:
 
-- **Version:** exact, and which other branches the code is unchanged on.
-- **Summary:** the defect and its user-visible effect, in two or three sentences.
-- **Cause:** the specific type, method and condition, and why it goes wrong. Compare with a
+- Version: exact, and which other branches the code is unchanged on.
+- Summary: the defect and its user-visible effect, in two or three sentences.
+- Cause: the specific type, method and condition, and why it goes wrong. Compare with a
   sibling that does it right if there is one ("the Anthropic provider overrides this; the Google
   one doesn't").
-- **Specifics:** real evidence. Verbatim error responses, stack traces, extended error codes,
+- Specifics: real evidence. Verbatim error responses, stack traces, extended error codes,
   versions bisected ("1.21.1 fails, 1.22.0 works").
-- **Steps to reproduce:** on a clean install, as few as possible, without your own product
+- Steps to reproduce: on a clean install, as few as possible, without your own product
   installed. If it needs timing, say how often it happens and how to make it likely.
-- **Expected and actual.**
-- **Offer:** "I have a fix ready for both branches and will open PRs that reference this issue."
+- Expected and actual.
+- Offer: "I have a fix ready for both branches and will open PRs that reference this issue."
 
 Describe the problem, not just your preferred solution; the maintainers may know a better one.
 
 ## The fix
 
-- **Small and focused.** One defect per PR; no drive-by formatting.
-- **In the shape of the codebase.** Follow its patterns and its stated principles. If the project
+- Small and focused. One defect per PR; no drive-by formatting.
+- In the shape of the codebase. Follow its patterns and its stated principles. If the project
   asks for fixes at the contract rather than one caller, fix the rule the layer must uphold.
-- **Tests that fail without it.** State that you watched them fail. Use real responses captured
+- Tests that fail without it. State that you watched them fail. Use real responses captured
   from the real system as fixtures where you can.
-- **A PR per supported branch,** each linking the issue with a closing keyword.
-- **A testing section** that says what was run, what was tested against the real system, and what
+- A PR per supported branch, each linking the issue with a closing keyword.
+- A testing section that says what was run, what was tested against the real system, and what
   wasn't reproduced live.
-- **Breaking changes:** none, or stated with the upgrade path.
+- Breaking changes: none, or stated with the upgrade path.
 
 ## Know when not to
 

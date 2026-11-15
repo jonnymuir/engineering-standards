@@ -30,7 +30,7 @@ what agents do alone and what a person decides. That system is what this playboo
 
 An agent starts every session knowing nothing about your repo except what it can read. So does a
 new colleague, and so do you after six months away. Everything that matters therefore has to be
-**knowledge in the world**, not knowledge in someone's head: rules written down where the work
+knowledge in the world, not knowledge in someone's head: rules written down where the work
 happens, checks that run on every change, tests that state behaviour, docs that describe what is
 true now. Content written that way serves the agent and the human equally well, because they need
 the same thing: the right fact, at the moment of the decision, in plain words.
@@ -53,9 +53,9 @@ the same thing: the right fact, at the moment of the decision, in plain words.
 
 ## How to use it
 
-- **Starting a repo:** run [`scripts/adopt.sh`](../scripts/adopt.sh) (see the
+- Starting a repo: run [`scripts/adopt.sh`](../scripts/adopt.sh) (see the
   [README](../README.md#adopting)), then read chapters 1 to 5.
-- **As an agent:** each chapter opens with **In short**, a list you can act on directly. The rest
+- As an agent: each chapter opens with In short, a list you can act on directly. The rest
   of the chapter says why, which is what you need when a case doesn't fit the list.
-- **Changing it:** rules come from practice. Something proves itself in a repo first, then lands
+- Changing it: rules come from practice. Something proves itself in a repo first, then lands
   here, with the repo it came from named in the PR. See [`CLAUDE.md`](../CLAUDE.md).
